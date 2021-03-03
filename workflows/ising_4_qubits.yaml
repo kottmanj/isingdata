@@ -2,7 +2,7 @@
 apiVersion: io.orquestra.workflow/1.0.0
 
 # Prefix for workflow ID
-name: madex
+name: dingo
 
 imports:
 - name: isingdata
@@ -12,7 +12,7 @@ imports:
     branch: "master"
 
 steps:
-- name: runmadtq
+- name: ising
   config:
     runtime:
       language: python3
