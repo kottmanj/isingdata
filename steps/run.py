@@ -31,7 +31,7 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
         for variables in starting_points:
             variables = {**variables, **mfvars}
             result = tq.minimize(E, initial_values=variables)
-            data.append({"energy":result.energy, "variables":result.variables, "circuit":encoder(circuit)})
+            data.append({"energy":result.energy, "variables":{k.name:v for k,v in result.variables.items()}, "circuit":encoder(circuit)})
     data = sorted(data, key=lambda x: x["energy"])
 
     result_dict = {"schema":"schema"}
