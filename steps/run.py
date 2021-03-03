@@ -28,7 +28,8 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
         energy_samples = []
         starting_points = [{k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()} for n in range(n_trials)]
         starting_points = [{k:0.0 for k in circuit.extract_variables()}] + starting_points
-        for variables in starting_points:
+        for j,variables in enumerate(starting_points):
+            print("step {} from {} in circuit {} from {}\n".format(j, n_trials, i,n_circuits))
             variables = {**variables, **mfvars}
             result = tq.minimize(E, initial_values=variables)
             data.append({"energy":result.energy, "variables":{str(k.name):v for k,v in result.variables.items()}, "circuit":encoder(circuit)})
