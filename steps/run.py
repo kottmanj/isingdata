@@ -1,6 +1,6 @@
 import tequila as tq
 import numpy
-from isingdata import CircuitGenerator, simplified_ising
+from isingdata import CircuitGenerator, simplified_ising, CircuitGenEncoder
 
 
 def test_circuits(n_qubits, n_circuits=1, n_trials=10, g=1.0, n_gates=None, max_coupling=2, connectivity="local_line", valid_generators=["Y", "XY", "YZ"]):
@@ -10,7 +10,8 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=10, g=1.0, n_gates=None, max_
         exact_gs = numpy.linalg.eigvalsh(H.to_matrix())
     else:
         exact_gs = None
-
+    # encoder to save circuits as string
+    encoder = CircuitGenEncoder()
     # solve "mean field"
     EMF = tq.ExpectationValue(H=H, U=initial_state)
     result = tq.minimize(EMF)
@@ -29,8 +30,8 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=10, g=1.0, n_gates=None, max_
         starting_points = [{k:0.0 for k in circuit.extract_variables()}] + starting_points
         for variables in starting_points:
             variables = {**variables, **mfvars}
-            result = tq.minmize(E, initial_values=variables)
-            data.append({"energy":result.energy, "variables":result.variables, "circuit":circuit})
+            result = tq.minimize(E, initial_values=variables)
+            data.append({"energy":result.energy, "variables":result.variables, "circuit":encoder(circuit)})
     data = sorted(data, key=lambda x: x["energy"])
 
     result.dict = {"schema":"schema"}
