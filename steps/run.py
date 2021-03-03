@@ -27,9 +27,6 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
     EMF = tq.ExpectationValue(H=H, U=initial_state)
     result = tq.minimize(EMF)
     mfvars = result.variables
-    # add random circuits to mean-field solution and try to minimize from different starting points
-    if n_gates is None:
-        n_gates = 2*n_qubits
     generator = CircuitGenerator(n_qubits=n_qubits, connectivity=connectivity, depth=depth, generators=generators)
 
     data = []
