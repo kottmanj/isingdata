@@ -34,13 +34,13 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
             data.append({"energy":result.energy, "variables":result.variables, "circuit":encoder(circuit)})
     data = sorted(data, key=lambda x: x["energy"])
 
-    result.dict = {"schema":"schema"}
-    result.dict["data"] = data
-    result.dict["n_qubits"]=n_qubits
-    result.dict["n_circuits"]=n_circuits
-    result.dict["n_trials"]=n_trials
-    result.dict["g"]=g
-    result.dict["exact_ground_state"]=exact_gs
+    result_dict = {"schema":"schema"}
+    result_dict["data"] = data
+    result_dict["n_qubits"]=n_qubits
+    result_dict["n_circuits"]=n_circuits
+    result_dict["n_trials"]=n_trials
+    result_dict["g"]=g
+    result_dict["exact_ground_state"]=exact_gs
     with open("isingdata.json", "w") as f:
         f.write(json.dumps(result_dict, indent=2))
 
