@@ -7,13 +7,13 @@ import numpy, typing, numbers
 
 class CircuitGenEncoder:
 
-    symbols = {"gate_separator":"%"}
+    symbols = {"gate_separator":"|", "angle_separator":"@"}
 
     def __call__(self, circuit:typing.Union[tq.QCircuit, str], *args, **kwargs):
         if hasattr(circuit, "gates") or isinstance(circuit, tq.QCircuit):
-            return self.encode(circuit=circuit)
+            return self.encode(circuit=circuit, *args, **kwargs)
         elif hasattr(circuit, "lower" or isinstance(circuit, str)):
-            return self.decode(string=circuit)
+            return self.decode(string=circuit, *args, **kwargs)
         else:
             raise Exception("unexpected input type for circuit: {}\n{}".format(type(circuit), circuit))
 
@@ -39,7 +39,13 @@ class CircuitGenEncoder:
         result = ""
         for gate in circuit.gates:
             generator = gate.make_generator(include_controls=True)
-            angle = gate.parameter(variables) if hasattr(gate, "parameter") else 1.0
+            if hasattr(gate, "parameter"):
+                try:
+                    angle = gate.parameter(variables)
+                except:
+                    angle = gate.parameter
+            else:
+                angle = 1.0
             for ps in generator.paulistrings:
                 if len(ps) == 0:
                     # ignore global phases
@@ -49,21 +55,35 @@ class CircuitGenEncoder:
 
         return result
 
-    def decode(self, string:str):
+    def decode(self, string:str, variables:dict=None):
         string_gates = string.split(self.symbols["gate_separator"])
         circuit = tq.QCircuit()
         for gate in string_gates:
             gate = gate.strip()
             if gate=="":
                 continue
+            angle, gate = gate.split(self.symbols["angle_separator"])
+            try:
+                angle=float(angle)
+            except:
+                angle = angle.strip()
+                if angle == "":
+                    angle=1.0
+                elif variables is not None and angle in variables:
+                    angle = variables[angle]
             ps = self.decode_paulistring(input=gate)
-            circuit += tq.gates.ExpPauli(paulistring=ps, angle=1.0) # angle in the coeff of the ps
+            circuit += tq.gates.ExpPauli(paulistring=ps, angle=angle)
         return circuit
 
     def encode_paulistring(self, ps, angle=1.0):
-        local_angle = ps.coeff * angle % (2.0 * numpy.pi)
+        if isinstance(angle, numbers.Number):
+            local_angle = ps.coeff * angle% (2.0 * numpy.pi)
+            angle = ""
+        else:
+            local_angle = ps.coeff % (2.0 * numpy.pi)
+
         gen_string = str(ps.naked())
-        return "{:2.4f}{}{}".format(local_angle, gen_string, self.symbols["gate_separator"])
+        return "{}{}{:2.4f}{}{}".format(angle, self.symbols["angle_separator"], local_angle, gen_string, self.symbols["gate_separator"])
 
     def decode_paulistring(self, input) -> tq.QubitHamiltonian:
         ps = tq.QubitHamiltonian.from_string(input)
@@ -214,10 +234,12 @@ def prune_circuit(circuit, variables, threshold=1.e-4):
 
 if __name__ == "__main__":
 
-    U = tq.gates.X(0) + tq.gates.H(0) + tq.gates.Y(1)
+    U = tq.gates.X(0) + tq.gates.H(0) + tq.gates.Ry(target=1, angle="a")
     encoder = CircuitGenEncoder()
     result = encoder(U)
+    print(result)
     U2 = encoder.decode(result)
+    print(U2)
 
     encoder.export_to(circuit=U, filename="before.pdf")
     encoder.export_to(circuit=U2, filename="after.pdf")
@@ -244,6 +266,7 @@ if __name__ == "__main__":
     print(generator)
     Urand = generator()
     encoder.export_to(Urand, filename="random.pdf")
+
 
 
 
