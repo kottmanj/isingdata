@@ -7,7 +7,7 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
     initial_state = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
     H = simplified_ising(n_qubits=n_qubits, g=g)
     if n_qubits < 10:
-        exact_gs = numpy.linalg.eigvalsh(H.to_matrix())
+        exact_gs = numpy.linalg.eigvalsh(H.to_matrix())[0]
     else:
         exact_gs = None
     # encoder to save circuits as string
@@ -31,7 +31,7 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
         for variables in starting_points:
             variables = {**variables, **mfvars}
             result = tq.minimize(E, initial_values=variables)
-            data.append({"energy":result.energy, "variables":{k.name:v for k,v in result.variables.items()}, "circuit":encoder(circuit)})
+            data.append({"energy":result.energy, "variables":{str(k.name):v for k,v in result.variables.items()}, "circuit":encoder(circuit)})
     data = sorted(data, key=lambda x: x["energy"])
 
     result_dict = {"schema":"schema"}
@@ -40,7 +40,9 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
     result_dict["n_circuits"]=n_circuits
     result_dict["n_trials"]=n_trials
     result_dict["g"]=g
-    result_dict["exact_ground_state"]=exact_gs
+    result_dict["exact_ground_state"]=float(exact_gs)
     with open("isingdata.json", "w") as f:
         f.write(json.dumps(result_dict, indent=2))
 
+if __name__ == "__main__":
+    test_circuits(4)
