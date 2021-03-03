@@ -1,0 +1,37 @@
+# Workflow API version
+apiVersion: io.orquestra.workflow/1.0.0
+
+# Prefix for workflow ID
+name: madex
+
+imports:
+- name: isingdata
+  type: git
+  parameters:
+    repository: "git@github.com:kottmanj/isingdata.git"
+    branch: "master"
+
+steps:
+- name: runmadtq
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: test_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "10Gi"
+  inputs:
+    - n_qubits: 4
+      type: int
+    - n_circuits: 1
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+types:
+  - isingdata
