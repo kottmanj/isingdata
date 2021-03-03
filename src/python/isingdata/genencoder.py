@@ -117,11 +117,11 @@ class CircuitGenerator:
         return self._connectivity
 
     @property
-    def valid_generators(self):
+    def generators(self):
         """
         :return: List of valid generators. Note that ['XY'] and ['YX'] are treated the same
         """
-        return self._valid_generators
+        return self._generators
 
     @property
     def max_coupling(self):
@@ -131,15 +131,13 @@ class CircuitGenerator:
         return self._max_coupling
 
     @property
-    def n_gates(self):
+    def max_depth(self):
         """
         :return: Number of gates generated for each circuit
         """
-        return  self._n_gates
+        return  self._max_depth
 
-    def __init__(self, n_gates:int, connectivity: typing.Union[dict, str]=None, n_qubits:int=None, valid_generators:list=None, max_coupling:int=2):
-
-        self._n_gates = n_gates
+    def __init__(self, depth:int=None, connectivity: typing.Union[dict, str]=None, n_qubits:int=None, generators:list=None):
 
         if connectivity is None:
             connectivity = "all_to_all"
@@ -149,13 +147,20 @@ class CircuitGenerator:
                 raise Exception("need to pass n_qubits if connectivity is automatically generated from key={}".format(connectivity))
             self._connectivity = self.make_connectivity_map(key=connectivity, n_qubits=n_qubits)
 
-        if isinstance(valid_generators, typing.Iterable):
-            self._valid_generators = ["".join(sorted(x)).upper() for x in valid_generators]
+        if isinstance(generators, typing.Iterable):
+            self._generators = ["".join(sorted(x)).upper() for x in generators]
+        elif generators is None:
+            self._generators = ["X", "Y", "Z", "XX", "YY", "ZZ", "XY", "XZ", "YZ"]
         else:
-            self._valid_generators=valid_generators
+            raise Exception("generators should be a list of strings: {}".format(generators))
 
-        assert max_coupling is not None
-        self._max_coupling = max_coupling
+        if depth is None:
+            if n_qubits is None:
+                raise Exception("need to pass n_qubits for default value of depth")
+            depth = n_qubits
+        self._max_depth = depth
+
+
 
     def make_connectivity_map(self, key:typing.Union[str,tq.QCircuit], n_qubits:int=None):
         if hasattr(key, "lower"):
@@ -176,38 +181,33 @@ class CircuitGenerator:
     def make_connectivity_map_from_circuit(circuit:tq.QCircuit):
         raise NotImplementedError("still missing")
 
-    def is_valid(self, ps : tq.PauliString):
-        if hasattr(ps, "paulistrings"):
-            assert len(ps)==1
-            ps = ps.paulistrings[0]
-
-        if self.valid_generators is None:
-            return True
-        elif isinstance(self.valid_generators, typing.Iterable):
-            return "".join(sorted(ps.values())).upper() in self.valid_generators
-        elif isinstance(self.valid_generators, typing.Callable):
-            return self.valid_generators(ps)
-        else:
-            raise Exception("self.valid_generators needs to be a list or a function.\n{}".format(self.valid_generators))
-
     def __call__(self):
+        return self.make_random_constant_depth_circuit(depth=self.max_depth)
+
+    def make_random_constant_depth_circuit(self, depth):
         connectivity = self.connectivity
-        primitives = ["X", "Y", "Z"]
         circuit = tq.QCircuit()
-        while(len(circuit.gates) < self.n_gates):
-            p0 = numpy.random.choice(primitives,1)[0]
-            q0 = int(numpy.random.choice(list(connectivity.keys()),1))
-            ps_string = "{}({})".format(p0, q0)
-            for j in range(self.max_coupling-1):
-                q1 = int(numpy.random.choice(connectivity[q0],1))
-                tmp = "{}({})".format(numpy.random.choice(primitives+["I"], 1)[0], q1)
-                if "I" not in tmp:
-                    ps_string += tmp
-            ps = tq.PauliString.from_string(ps_string)
-            if not self.is_valid(ps):
-                continue
-            circuit += tq.gates.ExpPauli(paulistring=ps, angle=(len(circuit.gates),))
+
+        primitives = self.generators
+        print(primitives)
+        for moment in range(depth):
+            qubits = list(connectivity.keys())
+            while(len(qubits) > 0):
+                try:
+                    p = numpy.random.choice(primitives,1)[0]
+                    print("picked {} from {}".format(p, primitives))
+                    q = numpy.random.choice(qubits,len(p), replace=False)
+                    ps = tq.PauliString(data={q[i]:p[i] for i in range(len(p))})
+                    print(ps)
+                    circuit += tq.gates.ExpPauli(paulistring=str(ps), angle=(len(circuit.gates),))
+                    qubits = [x for x in qubits if x not in q]
+                except ValueError as E:
+                    print("failed", "\n", str(E))
+                    continue
+
         return circuit
+
+
 
     def __repr__(self):
         result = "CircuitGenerator\n"
@@ -240,31 +240,16 @@ if __name__ == "__main__":
     print(result)
     U2 = encoder.decode(result)
     print(U2)
+    U3 = encoder.decode(result, variables={"a":1.0})
+    print(U3)
 
     encoder.export_to(circuit=U, filename="before.pdf")
     encoder.export_to(circuit=U2, filename="after.pdf")
 
-    # example: only ZZ as two-qubit gate
-    def all_single_and_zz(ps):
-        if len(ps) ==1:
-            return True
-        elif len(ps) ==2 and list(ps.values()).count("Z") == 2:
-            return True
-        else:
-            return False
 
-    # example: only number conserving two qubit gates
-    # circuit is not necesarily number conserving, but has the necessary gates
-    # would be the job of the AI algorithm to figure out that for each XY we also need a YX
-    def only_xy(ps):
-        if len(ps) ==2 and list(ps.values()).count("X") == list(ps.values()).count("Y"):
-            return True
-        else:
-            return False
-
-    generator = CircuitGenerator(n_gates=10, connectivity="local_line", n_qubits=5, valid_generators=["XY"])
+    generator = CircuitGenerator(n_gates=10, connectivity="local_line", n_qubits=5, generators=["Y", "XY"])
     print(generator)
-    Urand = generator()
+    Urand = generator.make_random_constant_depth_circuit(depth=10)
     encoder.export_to(Urand, filename="random.pdf")
 
 

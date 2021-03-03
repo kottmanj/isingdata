@@ -2,14 +2,25 @@ import tequila as tq
 import numpy, json
 from isingdata import CircuitGenerator, simplified_ising, CircuitGenEncoder
 
-
-def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_coupling=2, connectivity="local_line", valid_generators=["Y", "XY", "YZ"]):
-    initial_state = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
+def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     H = simplified_ising(n_qubits=n_qubits, g=g)
     if n_qubits < 10:
         exact_gs = numpy.linalg.eigvalsh(H.to_matrix())[0]
     else:
         exact_gs = None
+    
+    result_dict = {"schema":"schema"}
+    result_dict["data"] = test_circuits(H=H, *args, **kwargs)
+    result_dict["kwargs"]=kwargs
+    result_dict["g"]=g
+    result_dict["exact_ground_state"]=float(exact_gs)
+    with open("isingdata.json", "w") as f:
+        f.write(json.dumps(result_dict, indent=2))
+
+def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None):
+    # initial mean-field like state
+    n_qubits = H.n_qubits
+    initial_state = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
     # encoder to save circuits as string
     encoder = CircuitGenEncoder()
     # solve "mean field"
@@ -19,7 +30,7 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
     # add random circuits to mean-field solution and try to minimize from different starting points
     if n_gates is None:
         n_gates = 2*n_qubits
-    generator = CircuitGenerator(n_qubits=n_qubits, n_gates=n_gates, connectivity=connectivity, max_coupling=max_coupling, valid_generators=valid_generators)
+    generator = CircuitGenerator(n_qubits=n_qubits, connectivity=connectivity, depth=depth, generators=generators)
 
     data = []
     for i in range(n_circuits):
@@ -28,22 +39,15 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
         energy_samples = []
         starting_points = [{k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()} for n in range(n_trials)]
         starting_points = [{k:0.0 for k in circuit.extract_variables()}] + starting_points
+        starting_points = [{k:numpy.random.uniform(-0.1,0.1,1)[0]*numpy.pi for k in circuit.extract_variables()}] + starting_points
         for j,variables in enumerate(starting_points):
             print("step {} from {} in circuit {} from {}\n".format(j, n_trials, i,n_circuits))
             variables = {**variables, **mfvars}
             result = tq.minimize(E, initial_values=variables)
             data.append({"energy":result.energy, "variables":{str(k.name):v for k,v in result.variables.items()}, "circuit":encoder(circuit)})
     data = sorted(data, key=lambda x: x["energy"])
-
-    result_dict = {"schema":"schema"}
-    result_dict["data"] = data
-    result_dict["n_qubits"]=n_qubits
-    result_dict["n_circuits"]=n_circuits
-    result_dict["n_trials"]=n_trials
-    result_dict["g"]=g
-    result_dict["exact_ground_state"]=float(exact_gs)
-    with open("isingdata.json", "w") as f:
-        f.write(json.dumps(result_dict, indent=2))
+    print("finished test_circuits")
+    return data
 
 if __name__ == "__main__":
     test_circuits(4)
