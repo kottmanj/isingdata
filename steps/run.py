@@ -42,5 +42,5 @@ def test_circuits(n_qubits, n_circuits=1, n_trials=1, g=1.0, n_gates=None, max_c
     result.dict["g"]=g
     result.dict["exact_ground_state"]=exact_gs
     with open("isingdata.json", "w") as f:
-        f.write(json.dumps(results_dict, indent=2))
+        f.write(json.dumps(result_dict, indent=2))
 
