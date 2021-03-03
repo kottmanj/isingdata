@@ -5,7 +5,7 @@ from isingdata import CircuitGenerator, simplified_ising
 
 def test_circuits(n_qubits, n_circuits=1, n_trials=10, g=1.0, n_gates=None, max_coupling=2, connectivity="local_line", valid_generators=["Y", "XY", "YZ"]):
     initial_state = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
-    H = simplified_ising(n_qubits=n_qubits)
+    H = simplified_ising(n_qubits=n_qubits, g=g)
     if n_qubits < 10:
         exact_gs = numpy.linalg.eigvalsh(H.to_matrix())
     else:
