@@ -38,7 +38,7 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
         starting_points = [{k:0.0 for k in circuit.extract_variables()}] + starting_points
         starting_points = [{k:numpy.random.uniform(-0.1,0.1,1)[0]*numpy.pi for k in circuit.extract_variables()}] + starting_points
         for j,variables in enumerate(starting_points):
-            print("step {} from {} in circuit {} from {}\n".format(j, n_trials, i,n_circuits))
+            print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
             variables = {**variables, **mfvars}
             result = tq.minimize(E, initial_values=variables)
             data.append({"energy":result.energy, "variables":{str(k.name):v for k,v in result.variables.items()}, "circuit":encoder(circuit)})
