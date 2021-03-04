@@ -43,7 +43,9 @@ class CircuitGenEncoder:
                 try:
                     angle = gate.parameter(variables)
                 except:
-                    angle = gate.parameter
+                    angle = gate.parameter.extract_variables()
+                    if len(angle) == 1:
+                        angle = str(angle[0])
             else:
                 angle = 1.0
             for ps in generator.paulistrings:
@@ -199,7 +201,7 @@ class CircuitGenerator:
                     q = numpy.random.choice(qubits,len(p), replace=False)
                     ps = tq.PauliString(data={q[i]:p[i] for i in range(len(p))})
                     print(ps)
-                    circuit += tq.gates.ExpPauli(paulistring=str(ps), angle=(len(circuit.gates),))
+                    circuit += tq.gates.ExpPauli(paulistring=str(ps), angle="a{}".format(len(circuit.gates)))
                     qubits = [x for x in qubits if x not in q]
                 except ValueError as E:
                     print("failed", "\n", str(E))
@@ -247,9 +249,11 @@ if __name__ == "__main__":
     encoder.export_to(circuit=U2, filename="after.pdf")
 
 
-    generator = CircuitGenerator(n_gates=10, connectivity="local_line", n_qubits=5, generators=["Y", "XY"])
+    generator = CircuitGenerator(depth=10, connectivity="local_line", n_qubits=5, generators=["Y", "XY"])
     print(generator)
-    Urand = generator.make_random_constant_depth_circuit(depth=10)
+    Urand = generator()
+    encoded=encoder(Urand)
+    print(encoded)
     encoder.export_to(Urand, filename="random.pdf")
 
 
