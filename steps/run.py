@@ -26,7 +26,7 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     with open("isingdata.json", "w") as f:
         f.write(json.dumps(result_dict, indent=2))
 
-def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None):
+def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None, **kwargs):
     # initial mean-field like state
     n_qubits = H.n_qubits
     initial_state = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
@@ -37,7 +37,7 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
     EMF = tq.ExpectationValue(H=H, U=initial_state)
     result = tq.minimize(EMF)
     mfvars = result.variables
-    generator = CircuitGenerator(n_qubits=n_qubits, connectivity=connectivity, depth=depth, generators=generators)
+    generator = CircuitGenerator(n_qubits=n_qubits, connectivity=connectivity, depth=depth, generators=generators, **kwargs)
     print(generator)
     data = []
     for i in range(n_circuits):
