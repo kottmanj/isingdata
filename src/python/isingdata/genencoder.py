@@ -79,10 +79,12 @@ class CircuitGenEncoder:
 
     def encode_paulistring(self, ps, angle=1.0):
         if isinstance(angle, numbers.Number):
-            local_angle = ps.coeff * angle% (2.0 * numpy.pi)
+            local_angle = ps.coeff * angle
             angle = ""
         else:
-            local_angle = ps.coeff % (2.0 * numpy.pi)
+            local_angle = ps.coeff
+
+        local_angle = self.fix_periodicity(local_angle)
 
         gen_string = str(ps.naked())
         return "{}{}{:2.4f}{}{}".format(angle, self.symbols["angle_separator"], local_angle, gen_string, self.symbols["gate_separator"])
@@ -94,6 +96,25 @@ class CircuitGenEncoder:
 
     def export_to(self, circuit, filename="circuit.pdf"):
         tq.circuit.export_to(self.compile(circuit), filename=filename, always_use_generators=True, decompose_control_generators=True)
+
+    def fix_periodicity(self, angle):
+        angle = angle % (4.0*numpy.pi)
+        if angle < 0.0:
+            angle += 4.0*numpy.pi
+        return angle
+
+    def prune_circuit(self, circuit, variables, threshold=1.e-4):
+        gates = []
+        for gate in circuit.gates:
+            if hasattr(gate, "parameter"):
+                angle = self.fix_periodicity(gate.parameter(variables))
+                if not numpy.isclose(angle, 0.0, atol=threshold):
+                    gates.append(gate)
+            else:
+                gates.append(gate)
+        if len(gates) != len(circuit.gates):
+            print("pruned from {} to {}".format(len(circuit.gates), len(gates)))
+        return tq.QCircuit(gates=gates)
 
 class CircuitGenerator:
 
@@ -222,24 +243,13 @@ class CircuitGenerator:
 
         return result
 
-def prune_circuit(circuit, variables, threshold=1.e-4):
-    gates = []
-    for gate in circuit.gates:
-        if hasattr(gate, "parameter"):
-            angle = (gate.parameter(variables)%(2.0*numpy.pi))
-            if not numpy.isclose(angle, 0.0, atol=threshold):
-                gates.append(gate)
-        else:
-            gates.append(gate)
-    if len(gates) != len(circuit.gates):
-        print("pruned from {} to {}".format(len(circuit.gates), len(gates)))
-    return tq.QCircuit(gates=gates)
-
 
 if __name__ == "__main__":
 
     U = tq.gates.X(0) + tq.gates.H(0) + tq.gates.Ry(target=1, angle="a")
     encoder = CircuitGenEncoder()
+    UX = encoder.prune_circuit(U, variables={"a":4.0*numpy.pi})
+    print(UX)
     result = encoder(U)
     print(result)
     U2 = encoder.decode(result)

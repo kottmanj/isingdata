@@ -1,0 +1,253 @@
+# Workflow API version
+apiVersion: io.orquestra.workflow/1.0.0
+
+# Prefix for workflow ID
+name: dingo8
+
+imports:
+- name: isingdata
+  type: git
+  parameters:
+    repository: "git@github.com:kottmanj/isingdata.git"
+    branch: "master"
+
+steps:
+
+
+
+
+
+- name: ising-0
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-1
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-2
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-3
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-4
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-5
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-6
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-7
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-8
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-9
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+      resources:
+      cpu: "1000m"
+      memory: "1Gi"
+      disk: "5Gi"
+  inputs:
+    - n_qubits: 8
+      type: int
+    - n_circuits: 5
+      type: int
+    - n_trials: 3
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+
+types:
+  - isingdata
+
