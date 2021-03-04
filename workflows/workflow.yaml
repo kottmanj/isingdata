@@ -30,11 +30,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -53,11 +53,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -76,11 +76,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -99,11 +99,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -122,11 +122,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -145,11 +145,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -168,11 +168,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -191,11 +191,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -214,11 +214,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata
@@ -237,11 +237,11 @@ steps:
       memory: "1Gi"
       disk: "5Gi"
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
-    - n_circuits: 5
+    - n_circuits: 3
       type: int
-    - n_trials: 3
+    - n_trials: 1
       type: int
   outputs:
     - name: isingdata

@@ -160,7 +160,14 @@ class CircuitGenerator:
         """
         return  self._max_depth
 
-    def __init__(self, depth:int=None, connectivity: typing.Union[dict, str]=None, n_qubits:int=None, generators:list=None):
+    @property
+    def fix_angles(self):
+        """
+        :return: Dictionary with keys: Generator Type, values: Angles
+        """
+        return self._fix_angles
+
+    def __init__(self, depth:int=None, connectivity: typing.Union[dict, str]=None, n_qubits:int=None, generators:list=None, fix_angles:dict=None):
 
         if connectivity is None:
             connectivity = "all_to_all"
@@ -182,6 +189,10 @@ class CircuitGenerator:
                 raise Exception("need to pass n_qubits for default value of depth")
             depth = n_qubits
         self._max_depth = depth
+
+        if fix_angles is None:
+            fix_angles = {}
+        self._fix_angles = {k.upper():v for k,v in fix_angles.items()}
 
 
 
@@ -224,7 +235,11 @@ class CircuitGenerator:
                         q += list(numpy.random.choice(avaiable_connections,len(p)-1, replace=False))
                     ps = tq.PauliString(data={q[i]:p[i] for i in range(len(p))})
                     print(ps)
-                    circuit += tq.gates.ExpPauli(paulistring=str(ps), angle="a{}".format(len(circuit.gates)))
+
+                    angle="a_{}_{}".format(p,len(circuit.gates))
+                    if p in self.fix_angles:
+                        angle = self.fix_angles[p]
+                    circuit += tq.gates.ExpPauli(paulistring=str(ps), angle=angle)
                     qubits = [x for x in qubits if x not in q]
                 except ValueError as E:
                     print("failed", "\n", str(E))
@@ -261,12 +276,15 @@ if __name__ == "__main__":
     encoder.export_to(circuit=U2, filename="after.pdf")
 
 
-    generator = CircuitGenerator(depth=10, connectivity="local_line", n_qubits=4, generators=["Y", "XY", "YZ"])
+    generator = CircuitGenerator(depth=10, connectivity="local_line", n_qubits=4, generators=["Y", "XY"], fix_angles={"XY":numpy.pi/2})
     print(generator)
     Urand = generator()
     encoded=encoder(Urand)
     print(encoded)
     encoder.export_to(Urand, filename="random.pdf")
+
+    U = tq.gates.ExpPauli(paulistring="X({})Y({})".format(0,1), angle=numpy.pi/2)
+    print(tq.simulate(U))
 
 
 
