@@ -1,5 +1,6 @@
 import tequila as tq
 import numpy, json
+import yaml
 from isingdata import CircuitGenerator, simplified_ising, CircuitGenEncoder
 
 def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
@@ -11,9 +12,11 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     
     # orquestra workaround
     if "generators" in kwargs:
-        kwargs["generators"] = [x.strip().upper() for x in kwargs["generators"].strip("[").strip("]").split(",")]
+        kwargs["generators"] = json.loads(kwargs["generators"]
+        #kwargs["generators"] = [x.strip().upper() for x in kwargs["generators"].strip("[").strip("]").split(",")]
     if "fix_angles" in kwargs:
-        kwargs["fix_angles"] = {tmp.split(":")[0].strip().upper():float(tmp.split(":")[1].strip()) for tmp in kwargs["fix_angles"].strip("{").strip("}").split(",") }
+        kwargs["fix_angles"] = yaml.load(kwargs["fix_angles"], Loader=yaml.SafeLoader)
+        #kwargs["fix_angles"] = {tmp.split(":")[0].strip().upper():float(tmp.split(":")[1].strip()) for tmp in kwargs["fix_angles"].strip("{").strip("}").split(",") }
 
     result_dict = {"schema":"schema"}
     result_dict["data"] = test_circuits(H=H, *args, **kwargs)

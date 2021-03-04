@@ -36,9 +36,10 @@ steps:
       type: int
     - n_trials: {{n_trials}}
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata

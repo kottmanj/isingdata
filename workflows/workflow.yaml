@@ -36,9 +36,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -62,9 +63,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -88,9 +90,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -114,9 +117,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -140,9 +144,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -166,9 +171,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -192,9 +198,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -218,9 +225,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -244,9 +252,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: ["XY", "Y"]
-    - fix_angles: {"XY": 1.5707963267948966}
-      type: dict
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -270,10 +279,10 @@ steps:
       type: int
     - n_trials: 1
       type: int
-    - generators: "['XY', 'Y']"
-      type: str
-    - fix_angles: "{'XY': 1.5707963267948966}"
-      type: str
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
   outputs:
     - name: isingdata
       type: isingdata
@@ -281,3 +290,4 @@ steps:
 
 types:
   - isingdata
+
