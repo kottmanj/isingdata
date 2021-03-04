@@ -171,7 +171,7 @@ class CircuitGenerator:
             if key.lower() == "all_to_all":
                 return {k:[l for l in range(n_qubits) if l != k] for k in range(n_qubits)}
             elif key.lower() == "local_line":
-                return {0:[1],**{k:[k+1,k-1] for k in range(1,n_qubits-1)}, n_qubits:[n_qubits-1]}
+                return {0:[1],**{k:[k+1,k-1] for k in range(1,n_qubits-1)}, n_qubits-1:[n_qubits-2]}
             elif key.lower() == "local_ring":
                 return {k:[(k+1)%n_qubits,(k-1)%n_qubits] for k in range(n_qubits)}
             else:
@@ -251,7 +251,7 @@ if __name__ == "__main__":
     encoder.export_to(circuit=U2, filename="after.pdf")
 
 
-    generator = CircuitGenerator(depth=10, connectivity="local_line", n_qubits=8, generators=["Y", "XY", "YZ"])
+    generator = CircuitGenerator(depth=10, connectivity="local_line", n_qubits=4, generators=["Y", "XY", "YZ"])
     print(generator)
     Urand = generator()
     encoded=encoder(Urand)

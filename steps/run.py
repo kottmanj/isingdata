@@ -3,8 +3,6 @@ import numpy, json
 from isingdata import CircuitGenerator, simplified_ising, CircuitGenEncoder
 
 def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
-    import multiprocessing as mp
-    print(mp.cpu_count())
     H = simplified_ising(n_qubits=n_qubits, g=g)
     if n_qubits < 10:
         exact_gs = numpy.linalg.eigvalsh(H.to_matrix())[0]
@@ -23,6 +21,7 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
     # initial mean-field like state
     n_qubits = H.n_qubits
     initial_state = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
+    print(initial_state)
     # encoder to save circuits as string
     encoder = CircuitGenEncoder()
     # solve "mean field"
@@ -30,7 +29,7 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
     result = tq.minimize(EMF)
     mfvars = result.variables
     generator = CircuitGenerator(n_qubits=n_qubits, connectivity=connectivity, depth=depth, generators=generators)
-
+    print(generator)
     data = []
     for i in range(n_circuits):
         circuit = initial_state + generator()
