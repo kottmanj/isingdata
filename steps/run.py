@@ -12,7 +12,7 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     
     # orquestra workaround
     if "generators" in kwargs:
-        kwargs["generators"] = json.loads(kwargs["generators"]
+        kwargs["generators"] = json.loads(kwargs["generators"])
         #kwargs["generators"] = [x.strip().upper() for x in kwargs["generators"].strip("[").strip("]").split(",")]
     if "fix_angles" in kwargs:
         kwargs["fix_angles"] = yaml.load(kwargs["fix_angles"], Loader=yaml.SafeLoader)
