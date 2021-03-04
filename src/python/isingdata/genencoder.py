@@ -191,14 +191,16 @@ class CircuitGenerator:
         circuit = tq.QCircuit()
 
         primitives = self.generators
-        print(primitives)
         for moment in range(depth):
             qubits = list(connectivity.keys())
             while(len(qubits) > 0):
                 try:
                     p = numpy.random.choice(primitives,1)[0]
-                    print("picked {} from {}".format(p, primitives))
-                    q = numpy.random.choice(qubits,len(p), replace=False)
+                    q0 = int(numpy.random.choice(qubits,1, replace=False)[0])
+                    avaiable_connections = [x for x in connectivity[q0] if x in qubits]
+                    q = [q0]
+                    if len(p) > 1:
+                        q += list(numpy.random.choice(avaiable_connections,len(p)-1, replace=False))
                     ps = tq.PauliString(data={q[i]:p[i] for i in range(len(p))})
                     print(ps)
                     circuit += tq.gates.ExpPauli(paulistring=str(ps), angle="a{}".format(len(circuit.gates)))
@@ -249,7 +251,7 @@ if __name__ == "__main__":
     encoder.export_to(circuit=U2, filename="after.pdf")
 
 
-    generator = CircuitGenerator(depth=10, connectivity="local_line", n_qubits=5, generators=["Y", "XY"])
+    generator = CircuitGenerator(depth=10, connectivity="local_line", n_qubits=8, generators=["Y", "XY", "YZ"])
     print(generator)
     Urand = generator()
     encoded=encoder(Urand)
