@@ -3,6 +3,8 @@ import numpy, json
 from isingdata import CircuitGenerator, simplified_ising, CircuitGenEncoder
 
 def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
+    import multiprocessing as mp
+    print(mp.cpu_count())
     H = simplified_ising(n_qubits=n_qubits, g=g)
     if n_qubits < 10:
         exact_gs = numpy.linalg.eigvalsh(H.to_matrix())[0]
