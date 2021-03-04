@@ -28,5 +28,5 @@ qe get workflowresult ID
 ```
 
 ## Analyze results
-- download, extract and run [analyze\_workflow.py](steps/analyze_workflow.py)
+- download, extract and run [analyze\_workflow.py](src/python/isingdata/analyze_workflow.py)
  
