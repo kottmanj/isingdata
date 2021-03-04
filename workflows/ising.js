@@ -25,10 +25,6 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
     - n_qubits: {{n_qubits}}
       type: int
