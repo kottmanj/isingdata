@@ -9,6 +9,12 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     else:
         exact_gs = None
     
+    # orquestra workaround
+    if "generators" in kwargs:
+        kwargs["generators"] = [x.strip().upper() for x in kwargs["generators"].strip("[").strip("]").split(",")]
+    if "fix_angles" in kwargs:
+        kwargs["fix_angles"] = {tmp.split(":")[0].strip().upper():float(tmp.split(":")[1].strip()) for tmp in kwargs["fix_angles"].strip("{").strip("}").split(",") }
+
     result_dict = {"schema":"schema"}
     result_dict["data"] = test_circuits(H=H, *args, **kwargs)
     result_dict["kwargs"]=kwargs
