@@ -13,9 +13,9 @@ imports:
 
 steps:
 {% set steps = 10 %}
-{% set n_qubits = 6 %}
-{% set n_circuits = 3 %}
-{% set n_trials = 1 %}
+{% set n_qubits = 8 %}
+{% set n_circuits = 5 %}
+{% set n_trials = 5 %}
 {% for n in range(0, steps, 1) %}
 - name: ising-{{n}}
   config:

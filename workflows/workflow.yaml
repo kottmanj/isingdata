@@ -25,16 +25,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -52,16 +48,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -79,16 +71,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -106,16 +94,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -133,16 +117,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -160,16 +140,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -187,16 +163,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -214,16 +186,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -241,16 +209,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -268,16 +232,12 @@ steps:
       parameters:
         file: isingdata/steps/run.py
         function: run_ising_circuits
-      resources:
-      cpu: "1000m"
-      memory: "1Gi"
-      disk: "5Gi"
   inputs:
-    - n_qubits: 6
+    - n_qubits: 8
       type: int
-    - n_circuits: 3
+    - n_circuits: 5
       type: int
-    - n_trials: 1
+    - n_trials: 5
       type: int
     - generators: '["XY", "Y"]'
       type: string

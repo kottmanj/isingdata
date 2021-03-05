@@ -13,6 +13,6 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: Hopefully OS Independent",
     ),
-    install_requires=["tequila-basic", "qulacs"],
+    install_requires=["tequila-basic", "qulacs", "genencoder @ git+https://github.com/kottmanj/genencoder.git"],
 
 )
