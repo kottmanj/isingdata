@@ -65,7 +65,7 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
                 energy = result.energy
             else:
                 energy = tq.minimize(E, initial_values=variables, variables=active_variables)
-            ev_samples.append("energy":energy, "variables":{str(k):v for k,v in variables.items()})
+            ev_samples.append({"energy":energy, "variables":{str(k):v for k,v in variables.items()} })
         energy_samples={"circuit":encoded_circuit, "energy_samples": sorted(ev_samples, key=lambda x: x["energy"])}
         data.append(energy_samples)
     
