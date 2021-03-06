@@ -27,7 +27,7 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     with open("isingdata.json", "w") as f:
         f.write(json.dumps(result_dict, indent=2))
 
-def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None, **kwargs):
+def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None, only_samples=False, fix_mean_field=True, **kwargs):
     # initial mean-field like state
     n_qubits = H.n_qubits
     initial_state = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
@@ -38,12 +38,18 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
     EMF = tq.ExpectationValue(H=H, U=initial_state)
     result = tq.minimize(EMF)
     mfvars = result.variables
+    if fix_mean_field:
+        fixed_variables = result.variables
+    else:
+        fixed_variables = {}
     generator = CircuitGenerator(n_qubits=n_qubits, connectivity=connectivity, depth=depth, generators=generators, **kwargs)
     print(generator)
     data = []
     for i in range(n_circuits):
         circuit = initial_state + generator()
         E = tq.ExpectationValue(H=H, U=circuit)
+        if only_samples:
+            E = tq.compile(E, backend="qulacs")
         energy_samples = []
         starting_points = [{k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()} for n in range(n_trials)]
         starting_points = [{k:0.0 for k in circuit.extract_variables()}] + starting_points
@@ -51,8 +57,13 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
         for j,variables in enumerate(starting_points):
             print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
             variables = {**variables, **mfvars}
-            result = tq.minimize(E, initial_values=variables)
-            data.append({"energy":result.energy, "variables":{str(k.name):v for k,v in result.variables.items()}, "circuit":encoder(circuit)})
+            active_variables = [x for x in E.extract_variables() if x not in fixed_variables.keys()]
+            if only_samples:
+                result = tq.simulate(E, variables=variables)
+                data.append({"energy":result, "variables":{str(k.name):v for k,v in variables.items()}, "circuit":encoder(circuit, variables=fixed_variables)})
+            else:
+                result = tq.minimize(E, initial_values=variables, variables=active_variables)
+                data.append({"energy":result.energy, "variables":{str(k.name):v for k,v in result.variables.items()}, "circuit":encoder(circuit, variables=fixed_variables)})
     data = sorted(data, key=lambda x: x["energy"])
     print("finished test_circuits")
     return data

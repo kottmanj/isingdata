@@ -12,10 +12,10 @@ imports:
     branch: "master"
 
 steps:
-{% set steps = 10 %}
-{% set n_qubits = 6 %}
-{% set n_circuits = 5 %}
-{% set n_trials = 3 %}
+{% set steps = 1 %}
+{% set n_qubits = 4 %}
+{% set n_circuits = 10 %}
+{% set n_trials = 10 %}
 {% for n in range(0, steps, 1) %}
 - name: ising-{{n}}
   config:
@@ -36,6 +36,10 @@ steps:
       type: string
     - fix_angles: '{"XY": 1.5707963267948966}'
       type: string
+    - fix_mean_field: True
+      type: bool
+    - only_samples: True
+      type: bool
   outputs:
     - name: isingdata
       type: isingdata
