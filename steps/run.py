@@ -22,7 +22,6 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     # initial mean-field like state
     n_qubits = H.n_qubits
     UMF = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
-    print(initial_state)
     # encoder to save circuits as string
     encoder = CircuitGenEncoder()
     # solve "mean field"
@@ -52,7 +51,7 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, g=1.0, connect
     print(generator)
     data = []
     for i in range(n_circuits):
-        circuit = initial_state + generator()
+        circuit = UMF + generator()
         E = tq.ExpectationValue(H=H, U=circuit)
         if only_samples:
             E = tq.compile(E, backend="qulacs")
