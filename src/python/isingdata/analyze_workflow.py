@@ -36,15 +36,19 @@ def analyze_workflow(filename="workflow_result.json"):
     
     # sort by best samples/optimizations
     isingdata = sorted(isingdata, key=lambda x: min([ y["energy"] for y in x["energy_samples"] ]))
-    all_energies = [float(y["energy"]) for y in x["energy_sampled"] for x in isingdata] # all energy samples extracted
-    best_energies = [float(x["energy_samples"][0]["energy"]) for x in isingdata] # best energy samples for each circuit extracted
-    energies = [ [float(y["energy"]) for y in x["energy_samples"] ] for x in isingdata] # all energy_samples grouped for each circuit
+    all_energies = []
+    best_energies = []
+    energies = []
+    for x in isingdata:
+        all_energies += [float(y["energy"]) for y in x["energy_samples"]]
+        best_energies+= [float(x["energy_samples"][0]["energy"])] # best energy samples for each circuit extracted
+        energies.append([float(y["energy"]) for y in x["energy_samples"]]) # all energy_samples grouped for each circuit
 
     names_energies=[]
     n_qubits = 0
     for i,x in enumerate(isingdata):
         # energy samples are sorted in the workflow
-        U = encoder.prune_circuit(x["circuit"],variables=x["energy_samples"][0]["variables"])
+        U = encoder.prune_circuit(encoder(x["circuit"]),variables=x["energy_samples"][0]["variables"])
         n_qubits = max(n_qubits,U.n_qubits)
         name = "circuit_{}.pdf".format(i)
         tq.circuit.export_to(U, filename=name)
@@ -56,17 +60,20 @@ def analyze_workflow(filename="workflow_result.json"):
     plt.plot(all_energies, label="all_energies", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.legend()
+    plt.show()
     plt.savefig("all_energies.pdf")
     plt.figure()
     plt.plot(best_energies, label="best energies", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.legend()
+    plt.show()
     plt.savefig("best_energies.pdf")
     
     plt.figure()
     for i,x in enumerate(energies):
         plt.plot([i]*len(x), x, marker="x")
         plt.axhline(y=exact, color="tab:red", label="exact ground state")
+    plt.show()
     plt.savefig("energies.pdf")
     
     kwargs = "".join(["{}:{}\n".format(k,v) for k,v in kwargs.items()])
