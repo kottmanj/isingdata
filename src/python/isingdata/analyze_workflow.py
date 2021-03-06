@@ -38,7 +38,7 @@ def analyze_workflow(filename="workflow_result.json"):
     isingdata = sorted(isingdata, key=lambda x: min([ y["energy"] for y in x["energy_samples"] ]))
     all_energies = [float(y["energy"]) for y in x["energy_sampled"] for x in isingdata] # all energy samples extracted
     best_energies = [float(x["energy_samples"][0]["energy"]) for x in isingdata] # best energy samples for each circuit extracted
-    energies = [ [float(y["energy"]) for y in x["energy_samples"] for x in isingdata] # all energy_samples grouped for each circuit
+    energies = [ [float(y["energy"]) for y in x["energy_samples"] ] for x in isingdata] # all energy_samples grouped for each circuit
 
     names_energies=[]
     n_qubits = 0
