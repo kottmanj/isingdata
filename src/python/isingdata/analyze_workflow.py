@@ -21,7 +21,7 @@ def analyze_workflow(filename="workflow_result.json"):
     generators = None
     g = None
     for k1,v1 in data.items():
-        isingdata += (v1["isingdata"]["data"])
+        isingdata.append(v1["isingdata"]["data"])
         gs_energy = v1["isingdata"]["exact_ground_state"]
         kwargs = v1["isingdata"]["kwargs"]
         g = v1["isingdata"]["g"]
@@ -34,17 +34,14 @@ def analyze_workflow(filename="workflow_result.json"):
     if generators is None:
         generators = "['Y', 'XY', 'YZ']"
     
-    circuits = []
-    for x in isingdata:
-        print("energy=", x["energy"], " circuit=", x["circuit"])
-        circuits += [(x["energy"], encoder(x["circuit"]), x["variables"])]
-    
-    circuits = sorted(circuits, key=lambda x:x[0])
-    energies = [x[0] for x in circuits]
-    
+    # sort by best samples/optimizations
+    isingdata = sorted(isingdata, key=lambda xx: min([x["energy"] for x in xx ]))
+    all_energies = [float(x["energy"]) for x in xx for xx in isingdata]
+    energies = [ [float(x["energy"]) for x in xx] for xx in isingdata]
+
     names_energies=[]
     n_qubits = 0
-    for i,x in enumerate(circuits):
+    for i,x in enumerate(isingdata):
         U = encoder.prune_circuit(x[1],variables=x[2])
         n_qubits = max(n_qubits,U.n_qubits)
         print("energy = ", x[0])
@@ -56,12 +53,13 @@ def analyze_workflow(filename="workflow_result.json"):
             break
     
     print("exact ground state energy", exact)
-    plt.plot(energies, label="optimized circuits", color="navy")
+    plt.plot(best_energies, label="optimized circuits", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.plot(energies)
-    plt.savefig("energies.pdf")
+    plt.savefig("best_energies.pdf")
     
-    
+    kwargs = "".join(["{}:{}\n".format(k,v) for k,v in kwargs.items()])
+        
     tex_head=r"""
     \documentclass[]{scrartcl}
     

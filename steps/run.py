@@ -50,20 +50,25 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
         E = tq.ExpectationValue(H=H, U=circuit)
         if only_samples:
             E = tq.compile(E, backend="qulacs")
-        energy_samples = []
         starting_points = [{k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()} for n in range(n_trials)]
         starting_points = [{k:0.0 for k in circuit.extract_variables()}] + starting_points
         starting_points = [{k:numpy.random.uniform(-0.1,0.1,1)[0]*numpy.pi for k in circuit.extract_variables()}] + starting_points
+        ev_samples = []
+        encoded_circuit = encoder(circuit, variables=fixed_variables)
         for j,variables in enumerate(starting_points):
             print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
             variables = {**variables, **mfvars}
             active_variables = [x for x in E.extract_variables() if x not in fixed_variables.keys()]
             if only_samples:
                 result = tq.simulate(E, variables=variables)
-                data.append({"energy":result, "variables":{str(k.name):v for k,v in variables.items()}, "circuit":encoder(circuit, variables=fixed_variables)})
+                variables = result.variables
+                energy = result.energy
             else:
-                result = tq.minimize(E, initial_values=variables, variables=active_variables)
-                data.append({"energy":result.energy, "variables":{str(k.name):v for k,v in result.variables.items()}, "circuit":encoder(circuit, variables=fixed_variables)})
+                energy = tq.minimize(E, initial_values=variables, variables=active_variables)
+            ev_samples.append("energy":energy, "variables":{str(k):v for k,v in variables.items()})
+        energy_samples={"circuit":encoded_circuit, "energy_samples": sorted(ev_samples, key=lambda x: x["energy"])}
+        data.append(energy_samples)
+    
     data = sorted(data, key=lambda x: x["energy"])
     print("finished test_circuits")
     return data
