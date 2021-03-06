@@ -76,8 +76,9 @@ def analyze_workflow(filename="workflow_result.json"):
     plt.figure()
     for i,x in enumerate(energies):
         plt.plot([i]*len(x), x, marker="x")
-        plt.axhline(y=exact, color="tab:red", label="exact ground state")
-        plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
+    plt.axhline(y=exact, color="tab:red", label="exact ground state")
+    plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
+    plt.legend()
     plt.show()
     plt.savefig("energies.pdf")
     
