@@ -29,7 +29,7 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     result = tq.minimize(EMF)
 
     result_dict = {"schema":"schema"}
-    result_dict["data"] = test_circuits(H=H, UMF=UMF, variables_mf=result.variables, *args, **kwargs)
+    result_dict["data"] = test_circuits(H=H, UMF=UMF, mf_variables=result.variables, *args, **kwargs)
     result_dict["kwargs"]=kwargs
     result_dict["g"]=g
     result_dict["exact_ground_state"]=float(exact_gs)
@@ -62,7 +62,7 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, g=1.0, connect
         encoded_circuit = encoder(circuit, variables=fixed_variables)
         for j,variables in enumerate(starting_points):
             print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
-            variables = {**variables, **variables_mf}
+            variables = {**variables, **mf_variables}
             active_variables = [x for x in E.extract_variables() if x not in fixed_variables.keys()]
             if only_samples:
                 energy = tq.simulate(E, variables=variables)

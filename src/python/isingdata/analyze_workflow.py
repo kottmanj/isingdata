@@ -16,6 +16,7 @@ def analyze_workflow(filename="workflow_result.json"):
     
     isingdata = []
     exact = None
+    mf_energy = None
     n_qubits = None
     kwargs = None
     generators = None
@@ -23,6 +24,7 @@ def analyze_workflow(filename="workflow_result.json"):
     for k1,v1 in data.items():
         isingdata += v1["isingdata"]["data"] # this is a list of dictionaries with circuit and energy_samples, we're collecting all of them in a big list
         gs_energy = v1["isingdata"]["exact_ground_state"]
+        mf_energy = v1["isingdata"]["mean_field_energy"]
         kwargs = v1["isingdata"]["kwargs"]
         g = v1["isingdata"]["g"]
         print(gs_energy)
@@ -59,12 +61,14 @@ def analyze_workflow(filename="workflow_result.json"):
     print("exact ground state energy", exact)
     plt.plot(all_energies, label="all_energies", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
+    plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.legend()
     plt.show()
     plt.savefig("all_energies.pdf")
     plt.figure()
     plt.plot(best_energies, label="best energies", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
+    plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.legend()
     plt.show()
     plt.savefig("best_energies.pdf")
@@ -73,6 +77,7 @@ def analyze_workflow(filename="workflow_result.json"):
     for i,x in enumerate(energies):
         plt.plot([i]*len(x), x, marker="x")
         plt.axhline(y=exact, color="tab:red", label="exact ground state")
+        plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.show()
     plt.savefig("energies.pdf")
     
