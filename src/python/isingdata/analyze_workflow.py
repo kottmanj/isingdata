@@ -21,7 +21,7 @@ def analyze_workflow(filename="workflow_result.json"):
     generators = None
     g = None
     for k1,v1 in data.items():
-        isingdata.append(v1["isingdata"]["data"])
+        isingdata += v1["isingdata"]["data"] # this is a list of dictionaries with circuit and energy_samples, we're collecting all of them in a big list
         gs_energy = v1["isingdata"]["exact_ground_state"]
         kwargs = v1["isingdata"]["kwargs"]
         g = v1["isingdata"]["g"]
@@ -35,28 +35,39 @@ def analyze_workflow(filename="workflow_result.json"):
         generators = "['Y', 'XY', 'YZ']"
     
     # sort by best samples/optimizations
-    isingdata = sorted(isingdata, key=lambda xx: min([x["energy"] for x in xx ]))
-    all_energies = [float(x["energy"]) for x in xx for xx in isingdata]
-    energies = [ [float(x["energy"]) for x in xx] for xx in isingdata]
+    isingdata = sorted(isingdata, key=lambda x: min([ y["energy"] for y in x["energy_samples"] ]))
+    all_energies = [float(y["energy"]) for y in x["energy_sampled"] for x in isingdata] # all energy samples extracted
+    best_energies = [float(x["energy_samples"][0]["energy"]) for x in isingdata] # best energy samples for each circuit extracted
+    energies = [ [float(y["energy"]) for y in x["energy_samples"] for x in isingdata] # all energy_samples grouped for each circuit
 
     names_energies=[]
     n_qubits = 0
     for i,x in enumerate(isingdata):
-        U = encoder.prune_circuit(x[1],variables=x[2])
+        # energy samples are sorted in the workflow
+        U = encoder.prune_circuit(x["circuit"],variables=x["energy_samples"][0]["variables"])
         n_qubits = max(n_qubits,U.n_qubits)
-        print("energy = ", x[0])
-        print("variables = ", x[2])
         name = "circuit_{}.pdf".format(i)
         tq.circuit.export_to(U, filename=name)
-        names_energies += [(name, x[0])]
+        names_energies += [(name, x["energy_samples"][0]["energy"])]
         if i>4:
             break
     
     print("exact ground state energy", exact)
-    plt.plot(best_energies, label="optimized circuits", color="navy")
+    plt.plot(all_energies, label="all_energies", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
-    plt.plot(energies)
+    plt.legend()
+    plt.savefig("all_energies.pdf")
+    plt.figure()
+    plt.plot(best_energies, label="best energies", color="navy")
+    plt.axhline(y=exact, color="tab:red", label="exact ground state")
+    plt.legend()
     plt.savefig("best_energies.pdf")
+    
+    plt.figure()
+    for i,x in enumerate(energies):
+        plt.plot([i]*len(x), x, marker="x")
+        plt.axhline(y=exact, color="tab:red", label="exact ground state")
+    plt.savefig("energies.pdf")
     
     kwargs = "".join(["{}:{}\n".format(k,v) for k,v in kwargs.items()])
         
