@@ -69,7 +69,7 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
         energy_samples={"circuit":encoded_circuit, "energy_samples": sorted(ev_samples, key=lambda x: x["energy"])}
         data.append(energy_samples)
     
-    data = sorted(data, key=lambda x: x["energy"])
+    data = sorted(data, key=lambda x: x["energy_samples"][0])
     print("finished test_circuits")
     return data
 
