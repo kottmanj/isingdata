@@ -18,30 +18,36 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
         kwargs["fix_angles"] = yaml.load(kwargs["fix_angles"], Loader=yaml.SafeLoader)
     if "connectivity" in kwargs:
         kwargs["connectivity"] = yaml.load(kwargs["connectivity"], Loader=yaml.SafeLoader)
-
-    result_dict = {"schema":"schema"}
-    result_dict["data"] = test_circuits(H=H, *args, **kwargs)
-    result_dict["kwargs"]=kwargs
-    result_dict["g"]=g
-    result_dict["exact_ground_state"]=float(exact_gs)
-    with open("isingdata.json", "w") as f:
-        f.write(json.dumps(result_dict, indent=2))
-
-def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None, only_samples=False, fix_mean_field=True, **kwargs):
+    
     # initial mean-field like state
     n_qubits = H.n_qubits
-    initial_state = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
+    UMF = sum([tq.gates.Ry(angle=("a", q), target=q) for q in range(n_qubits)],tq.QCircuit())
     print(initial_state)
     # encoder to save circuits as string
     encoder = CircuitGenEncoder()
     # solve "mean field"
-    EMF = tq.ExpectationValue(H=H, U=initial_state)
+    EMF = tq.ExpectationValue(H=H, U=UMF)
     result = tq.minimize(EMF)
-    mfvars = result.variables
+
+    result_dict = {"schema":"schema"}
+    result_dict["data"] = test_circuits(H=H, UMF=UMF, variables_mf=result.variables, *args, **kwargs)
+    result_dict["kwargs"]=kwargs
+    result_dict["g"]=g
+    result_dict["exact_ground_state"]=float(exact_gs)
+    result_dict["mean_field_energy"]=float(result.energy)
+    with open("isingdata.json", "w") as f:
+        f.write(json.dumps(result_dict, indent=2))
+
+def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None, only_samples=False, fix_mean_field=True, **kwargs):
+    # initial mean-field like state
+    n_qubits = H.n_qubits
+    # encoder to save circuits as string
+    encoder = CircuitGenEncoder()
     if fix_mean_field:
-        fixed_variables = result.variables
+        fixed_variables = mf_variables
     else:
         fixed_variables = {}
+
     generator = CircuitGenerator(n_qubits=n_qubits, connectivity=connectivity, depth=depth, generators=generators, **kwargs)
     print(generator)
     data = []
@@ -57,7 +63,7 @@ def test_circuits(H, n_circuits=1, n_trials=1, g=1.0, connectivity="local_line",
         encoded_circuit = encoder(circuit, variables=fixed_variables)
         for j,variables in enumerate(starting_points):
             print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
-            variables = {**variables, **mfvars}
+            variables = {**variables, **variables_mf}
             active_variables = [x for x in E.extract_variables() if x not in fixed_variables.keys()]
             if only_samples:
                 energy = tq.simulate(E, variables=variables)
