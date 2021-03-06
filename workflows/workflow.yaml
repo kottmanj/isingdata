@@ -26,11 +26,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -49,11 +49,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -72,11 +72,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -95,11 +95,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -118,11 +118,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -141,11 +141,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -164,11 +164,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -187,11 +187,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -210,11 +210,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string
@@ -233,11 +233,11 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 8
+    - n_qubits: 6
       type: int
     - n_circuits: 5
       type: int
-    - n_trials: 5
+    - n_trials: 3
       type: int
     - generators: '["XY", "Y"]'
       type: string

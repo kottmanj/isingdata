@@ -1,6 +1,6 @@
 import json
 import tequila as tq
-from .genencoder import CircuitGenEncoder
+from genencoder import CircuitGenEncoder
 import matplotlib.pyplot as plt
 
 def analyze_workflow(filename="workflow_result.json"):
