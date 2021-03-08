@@ -56,7 +56,7 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
         E = tq.compile(E, backend="qulacs")
         sampled_energies = []
         for i in range(n_samples):
-            variables = [{k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()} for n in range(n_trials)]
+            variables = {k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()}
             sampled_energies.append(E(variables=variables))
 
 
