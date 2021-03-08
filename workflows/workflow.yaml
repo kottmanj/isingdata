@@ -39,7 +39,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -66,7 +66,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -93,7 +93,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -120,7 +120,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -147,7 +147,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -174,7 +174,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -201,7 +201,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -228,7 +228,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -255,7 +255,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -282,7 +282,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -309,7 +309,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -336,7 +336,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -363,7 +363,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -390,7 +390,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -417,7 +417,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -444,7 +444,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -471,7 +471,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -498,7 +498,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -525,7 +525,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
@@ -552,7 +552,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: 1000
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata

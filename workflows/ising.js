@@ -39,7 +39,7 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_trials: {{n_samples}}
+    - n_samples: {{n_samples}}
       type: int
   outputs:
     - name: isingdata
