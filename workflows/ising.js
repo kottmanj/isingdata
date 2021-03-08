@@ -2,7 +2,7 @@
 apiVersion: io.orquestra.workflow/1.0.0
 
 # Prefix for workflow ID
-name: dingo8
+name: dingo6-optim
 
 imports:
 - name: isingdata
@@ -14,8 +14,9 @@ imports:
 steps:
 {% set steps = 20 %}
 {% set n_qubits = 6 %}
-{% set n_circuits = 10 %}
-{% set n_trials = 100 %}
+{% set n_circuits = 100 %}
+{% set n_trials = 3 %}
+{% set n_samples = 1000 %}
 {% for n in range(0, steps, 1) %}
 - name: ising-{{n}}
   config:
@@ -38,8 +39,8 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - only_samples: True
-      type: bool
+    - n_trials: {{n_samples}}
+      type: int
   outputs:
     - name: isingdata
       type: isingdata

@@ -22,7 +22,7 @@ def analyze_workflow(filename="workflow_result.json"):
     generators = None
     g = None
     for k1,v1 in data.items():
-        isingdata += v1["isingdata"]["data"] # this is a list of dictionaries with circuit and energy_samples, we're collecting all of them in a big list
+        isingdata += v1["isingdata"]["data"] # this is a list of dictionaries with circuit and vqe_energies, we're collecting all of them in a big list
         gs_energy = v1["isingdata"]["exact_ground_state"]
         mf_energy = v1["isingdata"]["mean_field_energy"]
         kwargs = v1["isingdata"]["kwargs"]
@@ -37,50 +37,62 @@ def analyze_workflow(filename="workflow_result.json"):
         generators = "['Y', 'XY', 'YZ']"
     
     # sort by best samples/optimizations
-    isingdata = sorted(isingdata, key=lambda x: min([ y["energy"] for y in x["energy_samples"] ]))
+    isingdata = sorted(isingdata, key=lambda x: min([ y["energy"] for y in x["vqe_energies"] ]))
     all_energies = []
     best_energies = []
     energies = []
+    random_energies=[]
     for x in isingdata:
-        all_energies += [float(y["energy"]) for y in x["energy_samples"]]
-        best_energies+= [float(x["energy_samples"][0]["energy"])] # best energy samples for each circuit extracted
-        energies.append([float(y["energy"]) for y in x["energy_samples"]]) # all energy_samples grouped for each circuit
+        all_energies += [float(y["energy"]) for y in x["vqe_energies"]]
+        best_energies+= [float(x["vqe_energies"][0]["energy"])] # best energy samples for each circuit extracted
+        energies.append([float(y["energy"]) for y in x["vqe_energies"]]) # all vqe_energies grouped for each circuit
+        random_energies.append([float(y) for y in x["random_energies"]]) # all randomly sampled energies grouped for each circuit
 
     names_energies=[]
+    names_energies_worst=[]
     n_qubits = 0
     for i,x in enumerate(isingdata):
         # energy samples are sorted in the workflow
-        U = encoder.prune_circuit(encoder(x["circuit"]),variables=x["energy_samples"][0]["variables"])
+        U = encoder.prune_circuit(encoder(x["circuit"]),variables=x["vqe_energies"][0]["variables"])
         n_qubits = max(n_qubits,U.n_qubits)
         name = "circuit_{}.pdf".format(i)
         tq.circuit.export_to(U, filename=name)
-        names_energies += [(name, x["energy_samples"][0]["energy"])]
+        names_energies += [(name, x["vqe_energies"][0]["energy"])]
         if i>4:
             break
-    
+    for i,x in enumerate(reversed(isingdata)):
+        # energy samples are sorted in the workflow
+        U = encoder.prune_circuit(encoder(x["circuit"]),variables=x["vqe_energies"][0]["variables"])
+        n_qubits = max(n_qubits,U.n_qubits)
+        name = "worst_circuit_{}.pdf".format(i)
+        tq.circuit.export_to(U, filename=name)
+        names_energies_worst += [(name, x["vqe_energies"][0]["energy"])]
+        if i>4:
+            break
+ 
     print("exact ground state energy", exact)
+    fig=plt.figure()
     plt.plot(all_energies, label="all_energies", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.legend()
-    plt.show()
-    plt.savefig("all_energies.pdf")
-    plt.figure()
+    fig.savefig("all_energies.pdf")
+    fig=plt.figure()
     plt.plot(best_energies, label="best energies", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.legend()
-    plt.show()
-    plt.savefig("best_energies.pdf")
+    fig.savefig("best_energies.pdf")
     
-    plt.figure()
+    fig=plt.figure()
     for i,x in enumerate(energies):
-        plt.plot([i]*len(x), x, marker="x")
+        plt.plot([i]*len(x), x, marker="o", linestyle="")
+    for i,x in enumerate(random_energies):
+        plt.plot([i]*len(x), x, marker=".", linestyle="")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.legend()
-    plt.show()
-    plt.savefig("energies.pdf")
+    fig.savefig("energies.pdf")
     
     kwargs = "".join(["{}:{}\n".format(k,v) for k,v in kwargs.items()])
         
@@ -146,20 +158,13 @@ def analyze_workflow(filename="workflow_result.json"):
     tex_main += r"""
     \clearpage \section*{Worst Circuits}
     """
-    
-    for i,x in enumerate(reversed(circuits)):
-        U = encoder.prune_circuit(x[1],variables=x[2])
-        energy = x[0]
-        name = "worst_circuit_{}.pdf".format(i)
-        encoder.export_to(U, filename=name)
+    for name, energy in names_energies_worst:
         tex_main += """
         \\begin{{figure}}[h]
         \\includegraphics[width=0.8\\textwidth]{{{name}}}
         \\caption{{Energy={energy:+2.4f}}}
         \\end{{figure}}
-        """.format(name=name, energy=energy)
-        if i==2:
-            break
+        """.format(name=name, energy=energy) 
     
     outfile="result.tex" 
     tex = tex_head + tex_main + tex_tail
