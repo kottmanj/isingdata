@@ -3,6 +3,9 @@ import tequila as tq
 from genencoder import CircuitGenEncoder
 import matplotlib.pyplot as plt
 
+def average(x):
+    return sum(x)/len(x)
+
 def analyze_workflow(filename="workflow_result.json"):
     encoder = CircuitGenEncoder()
     
@@ -42,11 +45,17 @@ def analyze_workflow(filename="workflow_result.json"):
     best_energies = []
     energies = []
     random_energies=[]
+    min_max_random_energies = [] # only minimum/maximum and average of random_energies
+    best_vqe = []
+    best_sample = []
     for x in isingdata:
         all_energies += [float(y["energy"]) for y in x["vqe_energies"]]
         best_energies+= [float(x["vqe_energies"][0]["energy"])] # best energy samples for each circuit extracted
+        best_vqe+= [float(x["vqe_energies"][0]["energy"])] # best energy samples for each circuit extracted
+        best_sample+= [float(min(x["random_energies"]))] # best energy samples for each circuit extracted
         energies.append([float(y["energy"]) for y in x["vqe_energies"]]) # all vqe_energies grouped for each circuit
         random_energies.append([float(y) for y in x["random_energies"]]) # all randomly sampled energies grouped for each circuit
+        min_max_random_energies.append([min(x["random_energies"]), max(x["random_energies"]), average(x["random_energies"])]) # all randomly sampled energies grouped for each circuit
 
     names_energies=[]
     names_energies_worst=[]
@@ -76,13 +85,13 @@ def analyze_workflow(filename="workflow_result.json"):
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.legend()
-    fig.savefig("all_energies.pdf")
+    fig.savefig("all_energies.png")
     fig=plt.figure()
     plt.plot(best_energies, label="best energies", color="navy")
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.legend()
-    fig.savefig("best_energies.pdf")
+    fig.savefig("best_energies.png")
     
     fig=plt.figure()
     for i,x in enumerate(energies):
@@ -92,8 +101,37 @@ def analyze_workflow(filename="workflow_result.json"):
     plt.axhline(y=exact, color="tab:red", label="exact ground state")
     plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
     plt.legend()
-    fig.savefig("energies.pdf")
-    
+    fig.savefig("energies.png")
+   
+    fig=plt.figure()
+    for i,x in enumerate(energies):
+        plt.plot([i]*len(x), x, marker="x", linestyle="")
+    for i,x in enumerate(min_max_random_energies):
+        plt.plot([i]*len(x), x, marker=".", linestyle="")
+    plt.axhline(y=exact, color="tab:red", label="exact ground state")
+    plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
+    plt.legend()
+    fig.savefig("energies_small.png")
+
+    fig=plt.figure()
+    for i,x in enumerate(energies):
+        plt.plot([i]*len(x), x, marker="x", linestyle="", color="navy")
+    for i,x in enumerate(min_max_random_energies):
+        plt.plot([i]*len(x), x, marker=".", linestyle="", color="tab:red")
+    plt.axhline(y=exact, color="tab:red", label="exact ground state")
+    plt.axhline(y=mf_energy, color="tab:green", label="mean-field")
+    plt.legend()
+    fig.savefig("energies_small_colorcoded.png")
+
+    fig=plt.figure()
+    plt.plot(best_sample, best_vqe, marker="x", linestyle="")
+    plt.xlabel("min(samples)")
+    plt.ylabel("vqe")
+    plt.xlim([-7.5, -2.0])
+    plt.ylim([-7.5, -2.0])
+    fig.savefig("samples_vs_vqe.png")
+
+
     kwargs = "".join(["{}:{}\n".format(k,v) for k,v in kwargs.items()])
         
     tex_head=r"""
@@ -140,7 +178,7 @@ def analyze_workflow(filename="workflow_result.json"):
     \clearpage
     \section*{Energy Distribution}
     \begin{figure}
-    \includegraphics[width=0.8\textwidth]{energies.pdf}
+    \includegraphics[width=0.8\textwidth]{energies.png}
     \caption{Sorted energy distribution of all circuits}
     \end{figure}
     \clearpage

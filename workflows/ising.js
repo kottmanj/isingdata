@@ -2,7 +2,7 @@
 apiVersion: io.orquestra.workflow/1.0.0
 
 # Prefix for workflow ID
-name: dingo6-optim
+name: dingo12
 
 imports:
 - name: isingdata
@@ -12,11 +12,11 @@ imports:
     branch: "master"
 
 steps:
-{% set steps = 1 %}
-{% set n_qubits = 6 %}
-{% set n_circuits = 1 %}
+{% set steps = 20 %}
+{% set n_qubits = 12 %}
+{% set n_circuits = 10 %}
 {% set n_trials = 1 %}
-{% set n_samples = 1 %}
+{% set n_samples = 1000 %}
 {% for n in range(0, steps, 1) %}
 - name: ising-{{n}}
   config:

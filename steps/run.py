@@ -55,12 +55,15 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
         E = tq.ExpectationValue(H=H, U=circuit)
         E = tq.compile(E, backend="qulacs")
         sampled_energies = []
+        sampled_variables = []
         for sample in range(n_samples):
             variables = {k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()}
             sampled_energies.append(E(variables=variables))
-
-
-        starting_points = [{k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()} for n in range(n_trials)]
+            sampled_variables.append(variables)
+        
+        best_variables = sorted( [(sampled_energies[i],sampled_variables[i]) for i in range(n_samples)]  , key=lambda x:x[0] )
+        best_variables = [best_variables[i][1] for i in range(n_trials)]
+        starting_points = best_variables 
         starting_points = [{k:0.0 for k in circuit.extract_variables()}] + starting_points
         starting_points = [{k:numpy.random.uniform(-0.1,0.1,1)[0]*numpy.pi for k in circuit.extract_variables()}] + starting_points
         ev_samples = []

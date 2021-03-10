@@ -2,7 +2,7 @@
 apiVersion: io.orquestra.workflow/1.0.0
 
 # Prefix for workflow ID
-name: dingo6-optim
+name: dingo12
 
 imports:
 - name: isingdata
@@ -27,9 +27,9 @@ steps:
         file: isingdata/steps/run.py
         function: run_ising_circuits
   inputs:
-    - n_qubits: 6
+    - n_qubits: 12
       type: int
-    - n_circuits: 1
+    - n_circuits: 10
       type: int
     - n_trials: 1
       type: int
@@ -39,7 +39,520 @@ steps:
       type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 1
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-1
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-2
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-3
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-4
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-5
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-6
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-7
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-8
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-9
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-10
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-11
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-12
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-13
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-14
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-15
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-16
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-17
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-18
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
+      type: int
+  outputs:
+    - name: isingdata
+      type: isingdata
+
+- name: ising-19
+  config:
+    runtime:
+      language: python3
+      imports: [isingdata]
+      parameters:
+        file: isingdata/steps/run.py
+        function: run_ising_circuits
+  inputs:
+    - n_qubits: 12
+      type: int
+    - n_circuits: 10
+      type: int
+    - n_trials: 1
+      type: int
+    - generators: '["XY", "Y"]'
+      type: string
+    - fix_angles: '{"XY": 1.5707963267948966}'
+      type: string
+    - fix_mean_field: True
+      type: bool
+    - n_samples: 1000
       type: int
   outputs:
     - name: isingdata
