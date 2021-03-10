@@ -32,7 +32,7 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     result_dict["data"] = test_circuits(H=H, UMF=UMF, mf_variables=result.variables, *args, **kwargs)
     result_dict["kwargs"]=kwargs
     result_dict["g"]=g
-    result_dict["exact_ground_state"]=float(exact_gs)
+    result_dict["exact_ground_state"]=exact_gs
     result_dict["mean_field_energy"]=float(result.energy)
     with open("isingdata.json", "w") as f:
         f.write(json.dumps(result_dict, indent=2))
