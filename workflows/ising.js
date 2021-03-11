@@ -16,7 +16,7 @@ steps:
 {% set n_qubits = 6 %}
 {% set n_circuits = 20 %}
 {% set n_trials = 0 %}
-{% set only_samples = True %}
+{% set only_samples = False %}
 {% set n_samples = 1000 %}
 {% for n in range(0, steps, 1) %}
 - name: ising-{{n}}
@@ -41,6 +41,8 @@ steps:
     - n_samples: {{n_samples}}
       type: int
     - only_samples: {{only_samples}}
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata

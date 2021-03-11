@@ -40,7 +40,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -67,7 +69,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -94,7 +98,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -121,7 +127,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -148,7 +156,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -175,7 +185,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -202,7 +214,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -229,7 +243,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -256,7 +272,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -283,7 +301,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -310,7 +330,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -337,7 +359,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -364,7 +388,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -391,7 +417,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -418,7 +446,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -445,7 +475,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -472,7 +504,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -499,7 +533,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -526,7 +562,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -553,7 +591,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -580,7 +620,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -607,7 +649,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -634,7 +678,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -661,7 +707,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata
@@ -688,7 +736,9 @@ steps:
       type: bool
     - n_samples: 1000
       type: int
-    - only_samples: True
+    - only_samples: False
+      type: bool
+    - draw_from_normal_distribution: True
       type: bool
   outputs:
     - name: isingdata

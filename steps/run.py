@@ -58,9 +58,9 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
         sampled_variables = []
         for sample in range(n_samples):
             if draw_from_normal_distribution:
-                variables = {k:numpy.random.normal(loc=2.0, scale=2.0)[0]*numpy.pi for k in circuit.extract_variables()}
+                variables = {k:numpy.random.normal(loc=0.0, scale=2.0)[0]*numpy.pi for k in circuit.extract_variables()}
             else:
-                variables = {k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()}
+                variables = {k:numpy.random.uniform(0.0,4.0,1)*numpy.pi for k in circuit.extract_variables()}
 
             variables = {**variables, **fixed_variables}
             sampled_energies.append(E(variables=variables))
@@ -88,7 +88,7 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
             data = sorted(data, key=lambda x: x["vqe_energies"][0]["energy"])
         else:
             zeroes={k:0.0 for k in E.extract_variables()}
-            energy_samples={"circuit":encoded_circuit, "vqe_energies": [{"energy":tq.simulate(E, variables=zeroes), "variables":zeroes}], "random_energies":sampled_energies}
+            energy_samples={"circuit":encoded_circuit, "vqe_energies": [{"energy":tq.simulate(E, variables=zeroes), "variables":{str(k):v for k,v in zeroes.items()}}], "random_energies":sampled_energies}
             data.append(energy_samples)
     
     print("finished test_circuits")
