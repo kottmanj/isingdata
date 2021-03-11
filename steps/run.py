@@ -80,11 +80,12 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
                 energy = result.energy
                 ev_samples.append({"energy":energy, "variables":{str(k):v for k,v in variables.items()} })
             energy_samples={"circuit":encoded_circuit, "vqe_energies": sorted(ev_samples, key=lambda x: x["energy"]), "random_energies":sampled_energies}
+            data.append(energy_samples)
+            data = sorted(data, key=lambda x: x["vqe_energies"][0]["energy"])
         else:
             energy_samples={"circuit":encoded_circuit, "vqe_energies": [], "random_energies":sampled_energies}
-        data.append(energy_samples)
+            data.append(energy_samples)
     
-    data = sorted(data, key=lambda x: x["vqe_energies"][0]["energy"])
     print("finished test_circuits")
     return data
 
