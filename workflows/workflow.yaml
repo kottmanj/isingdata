@@ -18,6 +18,7 @@ steps:
 
 
 
+
 - name: ising-0
   config:
     runtime:
@@ -35,13 +36,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -64,13 +63,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -93,13 +90,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -122,13 +117,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -151,13 +144,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -180,13 +171,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -209,13 +198,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -238,13 +225,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -267,13 +252,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -296,13 +279,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -325,13 +306,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -354,13 +333,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -383,13 +360,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -412,13 +387,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -441,13 +414,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -470,13 +441,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -499,13 +468,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -528,13 +495,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -557,13 +522,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -586,13 +549,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -615,13 +576,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -644,13 +603,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -673,13 +630,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -702,13 +657,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata
@@ -731,13 +684,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
-    - n_samples: 20
+    - n_samples: 1000
       type: int
-    - only_samples: False
+    - only_samples: True
       type: bool
   outputs:
     - name: isingdata

@@ -16,7 +16,8 @@ steps:
 {% set n_qubits = 6 %}
 {% set n_circuits = 20 %}
 {% set n_trials = 0 %}
-{% set n_samples = 20 %}
+{% set only_samples = True %}
+{% set n_samples = 1000 %}
 {% for n in range(0, steps, 1) %}
 - name: ising-{{n}}
   config:
@@ -35,13 +36,11 @@ steps:
       type: int
     - generators: '["XY", "Y"]'
       type: string
-    - fix_angles: '{"XY": 1.5707963267948966}'
-      type: string
     - fix_mean_field: True
       type: bool
     - n_samples: {{n_samples}}
       type: int
-    - only_samples: False
+    - only_samples: {{only_samples}}
       type: bool
   outputs:
     - name: isingdata

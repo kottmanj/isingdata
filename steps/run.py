@@ -87,7 +87,7 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
             data.append(energy_samples)
             data = sorted(data, key=lambda x: x["vqe_energies"][0]["energy"])
         else:
-            zeroes={k:0.0 for x in E.extract_variables()}
+            zeroes={k:0.0 for k in E.extract_variables()}
             energy_samples={"circuit":encoded_circuit, "vqe_energies": [{"energy":tq.simulate(E, variables=zeroes), "variables":zeroes}], "random_energies":sampled_energies}
             data.append(energy_samples)
     
