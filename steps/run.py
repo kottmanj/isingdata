@@ -69,18 +69,19 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
         starting_points = [{k:numpy.random.uniform(-0.1,0.1,1)[0]*numpy.pi for k in circuit.extract_variables()}] + starting_points
         ev_samples = []
         encoded_circuit = encoder(circuit, variables=fixed_variables)
-        for j,variables in enumerate(starting_points):
-            if only_samples:
-                break
-            print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
-            variables = {**variables, **fixed_variables}
-            active_variables = [x for x in E.extract_variables() if x not in fixed_variables.keys()]
-            E = tq.ExpectationValue(H=H, U=circuit)
-            result = tq.minimize(E, initial_values=variables, variables=active_variables)
-            variables = result.variables
-            energy = result.energy
-            ev_samples.append({"energy":energy, "variables":{str(k):v for k,v in variables.items()} })
-        energy_samples={"circuit":encoded_circuit, "vqe_energies": sorted(ev_samples, key=lambda x: x["energy"]), "random_energies":sampled_energies}
+        if only_samples:
+            for j,variables in enumerate(starting_points):
+                print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
+                variables = {**variables, **fixed_variables}
+                active_variables = [x for x in E.extract_variables() if x not in fixed_variables.keys()]
+                E = tq.ExpectationValue(H=H, U=circuit)
+                result = tq.minimize(E, initial_values=variables, variables=active_variables)
+                variables = result.variables
+                energy = result.energy
+                ev_samples.append({"energy":energy, "variables":{str(k):v for k,v in variables.items()} })
+            energy_samples={"circuit":encoded_circuit, "vqe_energies": sorted(ev_samples, key=lambda x: x["energy"]), "random_energies":sampled_energies}
+        else:
+            energy_samples={"circuit":encoded_circuit, "vqe_energies": [], "random_energies":sampled_energies}
         data.append(energy_samples)
     
     data = sorted(data, key=lambda x: x["vqe_energies"][0]["energy"])

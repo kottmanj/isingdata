@@ -2,7 +2,7 @@
 apiVersion: io.orquestra.workflow/1.0.0
 
 # Prefix for workflow ID
-name: dingo12
+name: dingo6-low-sampling-rate
 
 imports:
 - name: isingdata
