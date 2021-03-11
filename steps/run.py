@@ -69,7 +69,7 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
         starting_points = [{k:numpy.random.uniform(-0.1,0.1,1)[0]*numpy.pi for k in circuit.extract_variables()}] + starting_points
         ev_samples = []
         encoded_circuit = encoder(circuit, variables=fixed_variables)
-        if only_samples:
+        if not only_samples:
             for j,variables in enumerate(starting_points):
                 print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
                 variables = {**variables, **fixed_variables}
