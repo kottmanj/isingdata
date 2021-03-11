@@ -37,7 +37,7 @@ def run_ising_circuits(n_qubits, g=1.0, *args, **kwargs):
     with open("isingdata.json", "w") as f:
         f.write(json.dumps(result_dict, indent=2))
 
-def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None, fix_mean_field=True, **kwargs):
+def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000, g=1.0, connectivity="local_line", generators=["Y", "XY", "YZ"], depth=None, fix_mean_field=True, only_samples=False, **kwargs):
     # initial mean-field like state
     n_qubits = H.n_qubits
     # encoder to save circuits as string
@@ -58,6 +58,7 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
         sampled_variables = []
         for sample in range(n_samples):
             variables = {k:numpy.random.uniform(0.0,4.0,1)[0]*numpy.pi for k in circuit.extract_variables()}
+            variables = {**variables, **fixed_variables}
             sampled_energies.append(E(variables=variables))
             sampled_variables.append(variables)
         
@@ -69,8 +70,10 @@ def test_circuits(H, UMF, mf_variables, n_circuits=1, n_trials=1, n_samples=1000
         ev_samples = []
         encoded_circuit = encoder(circuit, variables=fixed_variables)
         for j,variables in enumerate(starting_points):
+            if only_samples:
+                break
             print("step {} from {} in circuit {} from {}\n".format(j, len(starting_points), i ,n_circuits))
-            variables = {**variables, **mf_variables}
+            variables = {**variables, **fixed_variables}
             active_variables = [x for x in E.extract_variables() if x not in fixed_variables.keys()]
             E = tq.ExpectationValue(H=H, U=circuit)
             result = tq.minimize(E, initial_values=variables, variables=active_variables)

@@ -12,11 +12,11 @@ imports:
     branch: "master"
 
 steps:
-{% set steps = 20 %}
-{% set n_qubits = 12 %}
-{% set n_circuits = 10 %}
+{% set steps = 25 %}
+{% set n_qubits = 6 %}
+{% set n_circuits = 20 %}
 {% set n_trials = 1 %}
-{% set n_samples = 1000 %}
+{% set n_samples = 20 %}
 {% for n in range(0, steps, 1) %}
 - name: ising-{{n}}
   config:
@@ -41,6 +41,8 @@ steps:
       type: bool
     - n_samples: {{n_samples}}
       type: int
+    - only_samples: True
+      type: bool
   outputs:
     - name: isingdata
       type: isingdata
